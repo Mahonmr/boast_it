@@ -1,4 +1,5 @@
 class EventsController < ApplicationController
+  before_filter :load_user
   before_filter :authenticate_user!, :except => [:show, :index]
 
 
@@ -13,7 +14,7 @@ class EventsController < ApplicationController
   end
 
   def new
-    @event = Event.new
+    @event = @user.events.new
   end
 
   
@@ -22,7 +23,7 @@ class EventsController < ApplicationController
   end
 
   def create
-    @event = Event.new(params[:event])
+    @event = @user.events.new(params[:event])
 
     respond_to do |format|
       if @event.save
@@ -52,5 +53,11 @@ class EventsController < ApplicationController
     respond_to do |format|
       format.html { redirect_to events_url }
     end
+  end
+
+  private
+
+  def load_user
+    @user = current_user 
   end
 end

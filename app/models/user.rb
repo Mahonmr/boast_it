@@ -1,4 +1,5 @@
 class User < ActiveRecord::Base
+	has_many :events, inverse_of: :user
   # Include default devise modules. Others available are:
   # :token_authenticatable, :confirmable,
   # :lockable, :timeoutable and :omniauthable
